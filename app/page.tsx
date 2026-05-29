@@ -226,7 +226,7 @@ export default function Home() {
 
           {/* Right Column: Copywriting and Badges */}
           <div>
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 block">
+            <span className=" text-xs font-bold text-brand-primary uppercase tracking-widest mb-2 block">
               ABOUT SKY AGENCY
             </span>
             <h2 className="font-display font-extrabold text-3xl md:text-4xl text-[#0f172a] uppercase leading-tight">
