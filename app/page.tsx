@@ -66,34 +66,54 @@ export default function Home() {
     setOpenFaq(openFaq === index ? null : index);
   };
 
-  // Active Navigation Section Spying
+  // Active Navigation Section Spying & Scroll state
   const [activeSection, setActiveSection] = useState<string>("home");
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    const sections = ["home", "about", "services", "destinations", "advantages", "success", "faq"];
-    const observerOptions = {
-      root: null,
-      rootMargin: "-45% 0px -45% 0px", // triggers when section dominates the viewport center
-      threshold: 0,
-    };
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-    sections.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-    return () => {
-      sections.forEach((id) => {
+    const handleScroll = () => {
+      // 1. Update scrolled state
+      setIsScrolled(window.scrollY > 20);
+
+      // 2. Active section detection (Scroll spy)
+      const sections = ["home", "about", "services", "destinations", "advantages", "success", "faq"];
+      const scrollPosition = window.scrollY + 120; // offset for header height
+
+      // Special check: bottom of page
+      const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
+      if (isAtBottom) {
+        setActiveSection("faq");
+        return;
+      }
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const id = sections[i];
         const el = document.getElementById(id);
-        if (el) observer.unobserve(el);
-      });
+        if (el) {
+          if (scrollPosition >= el.offsetTop) {
+            setActiveSection(id);
+            break;
+          }
+        }
+      }
     };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close mobile menu on desktop window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const faqs = [
@@ -122,8 +142,12 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#f3f8fc] font-sans text-slate-800 flex flex-col">
       {/* STICKY HEADER */}
-      <header className="sticky top-0 w-full bg-[#f3f8fc]/90 backdrop-blur-md z-50 border-b border-slate-200/40 transition-shadow">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <header className={`sticky top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-[#f3f8fc]/95 backdrop-blur-md shadow-sm border-b border-slate-200/60 py-3"
+          : "bg-[#f3f8fc]/90 backdrop-blur-md border-b border-slate-200/40 py-4"
+      }`}>
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center relative">
           {/* Left: Logo */}
           <div className="flex items-center">
             <span className="font-display font-black text-2xl tracking-tight text-[#0f172a] lowercase">
@@ -131,7 +155,7 @@ export default function Home() {
             </span>
           </div>
 
-          {/* Center: Navigation Links (Scroll-spied and dynamic) */}
+          {/* Center: Navigation Links (Desktop only, scroll-spied and dynamic) */}
           <nav className="hidden md:flex items-center gap-8 text-sm font-semibold">
             {[
               { id: "home", label: "Home" },
@@ -159,8 +183,8 @@ export default function Home() {
             })}
           </nav>
 
-          {/* Right: Contact Us Button */}
-          <div>
+          {/* Right: Contact Us Button (Desktop only) */}
+          <div className="hidden md:block">
             <a
               href="#contact"
               className="px-6 py-2.5 bg-black hover:bg-slate-800 text-white text-xs font-bold rounded-full transition-colors inline-block text-center uppercase tracking-wider"
@@ -168,7 +192,66 @@ export default function Home() {
               Contact Us
             </a>
           </div>
+
+          {/* Hamburger Menu Button (Mobile only) */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-slate-800 hover:text-brand-primary transition-colors focus:outline-none cursor-pointer"
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : (
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
+          </button>
         </div>
+
+        {/* Mobile menu slide down, inside the header wrapper but below the main flex row */}
+        {mobileMenuOpen && (
+          <div className="md:hidden w-full bg-[#f3f8fc]/95 backdrop-blur-lg border-t border-slate-200/50 transition-all duration-300 ease-in-out">
+            <nav className="flex flex-col px-6 py-4 gap-3 text-sm font-semibold">
+              {[
+                { id: "home", label: "Home" },
+                { id: "about", label: "About Us" },
+                { id: "services", label: "Services" },
+                { id: "destinations", label: "Destinations" },
+                { id: "advantages", label: "Why Us" },
+                { id: "success", label: "Stories" },
+                { id: "faq", label: "FAQ" },
+              ].map((link) => {
+                const isActive = activeSection === link.id;
+                return (
+                  <a
+                    key={link.id}
+                    href={`#${link.id}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`transition-colors py-2 px-3 rounded-xl ${
+                      isActive
+                        ? "text-[#0f172a] bg-slate-200/50"
+                        : "text-slate-500 hover:text-[#0f172a] hover:bg-slate-100/50"
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
+              <div className="border-t border-slate-200/40 pt-3 mt-1">
+                <a
+                  href="#contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full px-6 py-3 bg-black hover:bg-slate-800 text-white text-xs font-bold rounded-full transition-colors block text-center uppercase tracking-wider"
+                >
+                  Contact Us
+                </a>
+              </div>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* MAIN CONTAINER (overflow-x-hidden wrapper sibling to allow header stickiness) */}
@@ -186,9 +269,9 @@ export default function Home() {
             <span className="text-brand-primary">Employment Services</span>
           </h1>
 
-          {/* Large Airplane Graphic positioned relative to the text bottom (z-20) for "text riding the plane" effect */}
-          <div className="absolute top-[12%] sm:top-[16%] md:top-[20%] left-1/2 -translate-x-1/2 w-full max-w-[1300px] h-[380px] sm:h-[500px] md:h-[620px] z-20 pointer-events-none">
-            <div className="w-full h-full relative">
+          {/* Large Airplane Graphic: flows relative below text on mobile, absolute overlap on desktop */}
+          <div className="relative md:absolute mt-8 md:mt-0 top-0 md:top-[20%] left-0 md:left-1/2 translate-x-0 md:-translate-x-1/2 w-full md:max-w-[1300px] h-[220px] sm:h-[360px] md:h-[620px] z-20 pointer-events-none">
+            <div className="w-full h-full relative animate-float">
               <Image
                 src="/images/hero-plane-2-removebg-preview_upscayl_4x_upscayl-standard-4x.png"
                 alt="SKY Agency 3D Airplane Graphic Upscaled"
