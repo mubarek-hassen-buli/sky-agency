@@ -41,6 +41,7 @@ export default function Home() {
   // Destinations Slider Focus State (starts on middle item of middle copy: Jordan, index 13)
   const [currentIndex, setCurrentIndex] = useState<number>(13);
   const [transitionEnabled, setTransitionEnabled] = useState<boolean>(true);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   // Re-enable transitions after a silent jump completes
   useEffect(() => {
@@ -51,6 +52,15 @@ export default function Home() {
       return () => clearTimeout(timer);
     }
   }, [transitionEnabled]);
+
+  // Autoplay for Destinations Slider (resets timer when user manually changes slide or hovers)
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => prev + 1);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [isHovered, currentIndex]);
 
   const handleTransitionEnd = () => {
     if (currentIndex < 9) {
@@ -468,7 +478,11 @@ export default function Home() {
         </div>
 
         {/* Carousel Container with Arrows and Masks */}
-        <div className="relative w-full">
+        <div 
+          className="relative w-full"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           
           {/* Left Cloudy Blur Gradient */}
           <div className="absolute left-0 top-0 bottom-0 w-24 md:w-56 bg-gradient-to-r from-[#f3f8fc] via-[#f3f8fc]/85 to-transparent z-20 pointer-events-none backdrop-blur-[3px]" />
