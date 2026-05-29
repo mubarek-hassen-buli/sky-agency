@@ -58,7 +58,7 @@ export default function Home() {
     if (isHovered) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => prev + 1);
-    }, 3500);
+    }, 1500);
     return () => clearInterval(interval);
   }, [isHovered, currentIndex]);
 
