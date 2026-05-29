@@ -38,8 +38,8 @@ export default function Home() {
   // FAQ State
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  // Destinations Slider Focus State (starts on middle item of middle copy: Jordan, index 13)
-  const [currentIndex, setCurrentIndex] = useState<number>(13);
+  // Destinations Slider Focus State (starts on middle item of middle copy: Jordan, index 12)
+  const [currentIndex, setCurrentIndex] = useState<number>(12);
   const [transitionEnabled, setTransitionEnabled] = useState<boolean>(true);
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
@@ -63,12 +63,12 @@ export default function Home() {
   }, [isHovered, currentIndex]);
 
   const handleTransitionEnd = () => {
-    if (currentIndex < 9) {
+    if (currentIndex < 8) {
       setTransitionEnabled(false);
-      setCurrentIndex(currentIndex + 9);
-    } else if (currentIndex >= 18) {
+      setCurrentIndex(currentIndex + 8);
+    } else if (currentIndex >= 16) {
       setTransitionEnabled(false);
-      setCurrentIndex(currentIndex - 9);
+      setCurrentIndex(currentIndex - 8);
     }
   };
 
@@ -524,7 +524,6 @@ export default function Home() {
                 { name: "Oman", img: "/images/oman.webp" },
                 { name: "Qatar", img: "/images/qatar.jpg" },
                 { name: "Lebanon", img: "/images/lebanon.jpg" },
-                { name: "And Beyond", img: "/images/hero-plane.jpg" },
               ];
               return (
                 <div
