@@ -761,55 +761,113 @@ export default function Home() {
       </section>
 
       {/* DETAILED AGENCY CONTACT SECTION */}
-      <section id="contact" className="w-full max-w-5xl mx-auto px-6 py-16 text-center">
-        <div className="bg-slate-900 text-white rounded-[32px] p-8 md:p-12 relative overflow-hidden border border-slate-800">
+      <section id="contact" className="w-full max-w-7xl mx-auto px-6 py-16">
+        <div className="bg-slate-900 text-white rounded-[40px] p-8 md:p-12 lg:p-16 relative overflow-hidden border border-slate-800">
           {/* background geometric glow */}
           <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-brand-primary/10 blur-[100px] pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-60 h-60 rounded-full bg-brand-primary/10 blur-[80px] pointer-events-none" />
 
-          <div className="relative z-10 max-w-2xl mx-auto space-y-6">
-            <span className="text-xs font-bold text-brand-primary uppercase tracking-widest">
-              GET IN TOUCH DIRECTLY
-            </span>
-            <h2 className="font-display font-extrabold text-3xl md:text-4xl uppercase tracking-tight leading-tight">
-              Ready to take the <br className="sm:hidden" /> next step in your career?
-            </h2>
-            <p className="text-slate-300 text-sm md:text-base leading-relaxed">
-              If you are a job seeker looking for an international job contract, or an employer looking to recruit skilled labor, contact our support team.
-            </p>
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+            {/* Left Column: Contact details */}
+            <div className="lg:col-span-7 flex flex-col justify-between space-y-8 text-left">
+              <div className="space-y-4">
+                <span className="inline-block text-[10px] font-bold text-brand-primary bg-white/5 border border-white/10 px-4 py-1.5 rounded-full uppercase tracking-wider">
+                  Get in Touch
+                </span>
+                <h2 className="font-display font-extrabold text-3xl md:text-5xl uppercase tracking-tight leading-[1.05] text-white">
+                  Ready to Partner <br />
+                  with <span className="text-brand-primary">SKY Agency?</span>
+                </h2>
+                <p className="text-slate-400 text-sm md:text-base leading-relaxed max-w-xl">
+                  Reach us by WhatsApp, phone or email. Our team is ready for partner and candidate inquiries.
+                </p>
+              </div>
 
-            <div className="flex flex-col sm:flex-row gap-6 items-center justify-center pt-4">
-              {/* Phone Card */}
-              <a
-                href="tel:0910918428"
-                className="w-full sm:w-auto flex items-center gap-4 bg-white/5 border border-white/10 hover:border-brand-primary hover:bg-white/10 p-4 px-6 rounded-2xl transition-all"
-              >
-                <div className="w-10 h-10 rounded-full bg-[#ebf8ff] text-brand-primary flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
+              {/* Contact Details List */}
+              <div className="space-y-4 max-w-xl">
+                {/* Address Card */}
+                <div className="flex items-center gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 text-brand-primary flex items-center justify-center shrink-0 border border-white/5">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div className="text-left">
+                    <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">ADDRESS</span>
+                    <span className="text-sm font-bold text-white block mt-0.5">Girar, Ayer Tena, Addis Ababa, Ethiopia</span>
+                  </div>
                 </div>
-                <div className="text-left">
-                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">CALL US DIRECTLY</span>
-                  <span className="text-base font-extrabold text-white">0910918428</span>
-                </div>
-              </a>
 
-              {/* Email Card */}
+                {/* WhatsApp Card */}
+                <a
+                  href="https://wa.me/251910918428"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 bg-white/5 border border-white/10 hover:border-brand-primary/50 hover:bg-white/10 p-4 px-6 rounded-2xl transition-all"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center shrink-0 border border-white/5 p-2.5">
+                    <Image
+                      src="/images/whatsapp.png"
+                      alt="WhatsApp Icon"
+                      width={20}
+                      height={20}
+                      className="object-contain"
+                    />
+                  </div>
+                  <div className="text-left">
+                    <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">WHATSAPP</span>
+                    <span className="text-sm font-bold text-white block mt-0.5">+251 91 091 8428</span>
+                  </div>
+                </a>
+
+                {/* Email Card */}
+                <a
+                  href="mailto:Skyagency64@gmail.com"
+                  className="flex items-center gap-4 bg-white/5 border border-white/10 hover:border-brand-primary/50 hover:bg-white/10 p-4 rounded-2xl transition-all"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-white/5 text-brand-primary flex items-center justify-center shrink-0 border border-white/5">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div className="text-left">
+                    <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">EMAIL</span>
+                    <span className="text-sm font-bold text-white block mt-0.5">Skyagency64@gmail.com</span>
+                  </div>
+                </a>
+              </div>
+
+              {/* WhatsApp Call to Action Button */}
               <a
-                href="mailto:Skyagency64@gmail.com"
-                className="w-full sm:w-auto flex items-center gap-4 bg-white/5 border border-white/10 hover:border-brand-primary hover:bg-white/10 p-4 px-6 rounded-2xl transition-all"
+                href="https://wa.me/251910918428"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 bg-white hover:bg-slate-100 hover:scale-105 active:scale-95 text-slate-900 text-xs font-bold rounded-full transition-all duration-300 w-fit uppercase tracking-wider shadow-lg cursor-pointer"
               >
-                <div className="w-10 h-10 rounded-full bg-[#ebf8ff] text-brand-primary flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.4} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div className="text-left">
-                  <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-wider">EMAIL AN INQUIRY</span>
-                  <span className="text-base font-extrabold text-white">Skyagency64@gmail.com</span>
-                </div>
+                <Image
+                  src="/images/whatsapp.png"
+                  alt="WhatsApp Icon"
+                  width={18}
+                  height={18}
+                  className="shrink-0 object-contain"
+                />
+                <span>WhatsApp Us</span>
               </a>
+            </div>
+
+            {/* Right Column: Google Maps Iframe container */}
+            <div className="lg:col-span-5 w-full h-80 lg:h-auto min-h-[380px] rounded-3xl overflow-hidden border border-white/10 relative">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15763.302302717032!2d38.694605929658235!3d9.012759989662707!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85ab1751d3b3%3A0xe5566f1cfdc47697!2sAyer%20Tena%2C%20Addis%20Ababa!5e0!3m2!1sen!2set!4v1717024300000!5m2!1sen!2set"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="absolute inset-0 w-full h-full opacity-90 hover:opacity-100 transition-opacity duration-300"
+              />
             </div>
           </div>
         </div>
